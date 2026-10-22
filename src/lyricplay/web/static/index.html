@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="theme-color" content="#0a0c0b">
+    <meta name="description" content="lyricplay — a quiet, cinematic music player with synced lyrics.">
+    <title>lyricplay — find the song. feel every word.</title>
+    <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Jersey+10&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/app.css">
+  </head>
+  <body>
+    <div class="atmosphere" aria-hidden="true">
+      <div class="grain"></div>
+      <div class="scanlines"></div>
+    </div>
+
+    <main class="shell">
+      <header class="topbar">
+        <a class="brand" href="/" aria-label="lyricplay home">
+          <span class="brand-mark" aria-hidden="true">✳</span>
+          <span class="brand-word">lyricplay</span>
+        </a>
+        <div class="topbar-side">
+          <span class="session-pill"><span class="pulse"></span> local session</span>
+          <span class="topbar-code" aria-hidden="true">LP / 001</span>
+        </div>
+      </header>
+
+      <section id="home-view" class="home-view">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow"><span class="eyebrow-mark"></span> youtube → lyrics → perfect timing</p>
+            <h1>Find the song.<br><span class="gold">Feel every word.</span></h1>
+            <p class="hero-lede">
+              Search the music you love, press play, and let the words land
+              exactly when they should. No clutter. Just the track and the line.
+            </p>
+
+            <form id="search-form" class="search-shell" role="search" autocomplete="off">
+              <span class="search-glyph" aria-hidden="true">⌕</span>
+              <input
+                id="search-input"
+                name="q"
+                type="search"
+                placeholder="Search a song, artist, or lyric…"
+                aria-label="Search for a song"
+                maxlength="160"
+                spellcheck="false"
+                required
+              >
+              <kbd class="slash-key" aria-hidden="true">/</kbd>
+              <button id="search-submit" class="search-button" type="submit">
+                <span>Search</span>
+                <span class="search-arrow" aria-hidden="true">↗</span>
+              </button>
+            </form>
+            <p id="search-status" class="search-status" role="status">
+              Tip: press <kbd>/</kbd> to jump to the search box.
+            </p>
+            <div id="suggestions" class="suggestions" aria-label="Search suggestions">
+              <span class="suggestions-label">TRY</span>
+              <button type="button" class="chip" data-query="wish you were here pink floyd">Wish You Were Here</button>
+              <button type="button" class="chip" data-query="night changes one direction">Night Changes</button>
+              <button type="button" class="chip" data-query="redbone childish gambino">Redbone</button>
+              <button type="button" class="chip" data-query="dreams fleetwood mac">Dreams</button>
+            </div>
+          </div>
+
+          <div class="hero-poster" aria-hidden="true">
+            <div class="poster-grid"></div>
+            <div class="poster-top">
+              <span>LYRICPLAY / A-SIDE</span>
+              <span class="poster-live"><i></i> LIVE</span>
+            </div>
+            <div class="poster-lyrics">
+              <p class="poster-line">PSST, I SEE</p>
+              <p class="poster-line gold">EVERY WORD.</p>
+            </div>
+            <div class="poster-bottom">
+              <div class="poster-wave">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </div>
+              <span class="poster-time">00:00 / 03:42</span>
+            </div>
+            <div class="poster-corner">SYNCED<br>LYRICS</div>
+          </div>
+        </div>
+
+        <section id="results-section" class="results-section" hidden>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Search results</p>
+              <h2 id="results-heading">Songs for you</h2>
+            </div>
+            <div class="results-meta">
+              <span id="results-count" class="results-count"></span>
+              <span id="results-cache" class="cache-pill" hidden>cached</span>
+            </div>
+          </div>
+          <div id="results-grid" class="results-grid"></div>
+          <div id="results-empty" class="empty-state" hidden>
+            <span class="empty-glyph" aria-hidden="true">∅</span>
+            <p id="results-empty-message">No signal found. Try another spelling, artist, or lyric.</p>
+          </div>
+        </section>
+
+        <section id="recent-section" class="results-section" hidden>
+          <div class="section-head">
+            <div>
+              <p class="eyebrow">Pick up where you left off</p>
+              <h2>Recently played</h2>
+            </div>
+            <button id="clear-recent" class="text-button" type="button">Clear history</button>
+          </div>
+          <div id="recent-grid" class="results-grid recent-grid"></div>
+        </section>
+
+        <section class="features" aria-label="Why lyricplay">
+          <article class="feature-card">
+            <span class="feature-index">01</span>
+            <span class="feature-glyph" aria-hidden="true">⌁</span>
+            <h3>Exact LRC timing</h3>
+            <p>Timestamped lyrics drive the display, line by line. Nudge the sync when a master needs it.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">02</span>
+            <span class="feature-glyph" aria-hidden="true">ϟ</span>
+            <h3>Cache-first requests</h3>
+            <p>Searches, lyrics, and audio are cached. The second listen is almost immediate.</p>
+          </article>
+          <article class="feature-card">
+            <span class="feature-index">03</span>
+            <span class="feature-glyph" aria-hidden="true">⌘</span>
+            <h3>Made for keys</h3>
+            <p><kbd>/</kbd> to search, <kbd>space</kbd> to pause, <kbd>[</kbd> <kbd>]</kbd> to tune. Your hands stay on the keyboard.</p>
+          </article>
+        </section>
+
+        <footer class="footer">
+          <span>lyricplay <span class="footer-gold">/</span> a quiet place for loud songs</span>
+          <span>audio cached locally · lyrics by LRCLIB</span>
+        </footer>
+      </section>
+
+      <section id="player-view" class="player-view" aria-label="Now playing" hidden>
+        <div class="player-topline">
+          <button id="back-button" class="ghost-button" type="button">
+            <span aria-hidden="true">←</span> Search again
+          </button>
+          <span class="session-pill"><span class="pulse"></span> <span id="player-status">preparing</span></span>
+        </div>
+
+        <div class="player-grid">
+          <aside class="now-card">
+            <div class="cover-wrap">
+              <div id="cover-art" class="cover-art">
+                <img id="cover-image" alt="" hidden>
+                <span id="cover-letter" class="cover-letter">L</span>
+                <span class="cover-scan" aria-hidden="true"></span>
+              </div>
+              <div class="cover-shadow" aria-hidden="true"></div>
+            </div>
+
+            <p id="player-eyebrow" class="eyebrow">Now playing</p>
+            <h2 id="player-title" tabindex="-1">Loading the track</h2>
+            <p id="player-artist" class="player-artist">lyricplay</p>
+            <p id="player-channel" class="player-channel"></p>
+
+            <div class="timeline">
+              <input id="seek" class="range" type="range" min="0" max="100" value="0" step="0.01" aria-label="Seek through track">
+              <div class="time-row">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+              </div>
+            </div>
+
+            <div class="controls">
+              <button id="rewind" class="round-button" type="button" aria-label="Back 5 seconds">−5</button>
+              <button id="play-toggle" class="play-button" type="button" aria-label="Play">
+                <span id="play-icon" aria-hidden="true">▶</span>
+              </button>
+              <button id="forward" class="round-button" type="button" aria-label="Forward 5 seconds">+5</button>
+            </div>
+
+            <div class="player-tools">
+              <div class="tool-group">
+                <span class="tool-label">SYNC</span>
+                <button id="sync-earlier" class="mini-button" type="button" aria-label="Shift lyrics earlier">−0.1</button>
+                <span id="sync-value">0.0s</span>
+                <button id="sync-later" class="mini-button" type="button" aria-label="Shift lyrics later">+0.1</button>
+              </div>
+              <div class="tool-group">
+                <span class="tool-label">VOL</span>
+                <button id="mute-toggle" class="mini-button" type="button" aria-label="Mute">◖</button>
+                <input id="volume" class="range volume-range" type="range" min="0" max="1" step="0.01" value="1" aria-label="Volume">
+              </div>
+            </div>
+
+            <div class="key-hints" aria-hidden="true">
+              <span><kbd>space</kbd> play</span>
+              <span><kbd>[</kbd><kbd>]</kbd> sync</span>
+              <span><kbd>esc</kbd> back</span>
+            </div>
+          </aside>
+
+          <section class="lyrics-card">
+            <div class="lyrics-card-head">
+              <span class="eyebrow">Lyrics</span>
+              <span id="lyrics-badge" class="badge">LRCLIB · SYNCED</span>
+            </div>
+            <div class="lyrics-stage">
+              <p id="lyric-previous" class="lyric-context"></p>
+              <p id="lyric-current" class="lyric-current" aria-live="polite">Tuning the signal…</p>
+              <p id="lyric-next" class="lyric-context"></p>
+            </div>
+            <div class="lyrics-card-foot">
+              <span id="lyrics-note">Downloading audio and matching lyrics.</span>
+              <span id="equalizer" class="equalizer" aria-hidden="true">
+                <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+              </span>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <audio id="audio" preload="metadata"></audio>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="/static/app.js" defer></script>
+  </body>
+</html>

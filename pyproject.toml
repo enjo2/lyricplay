@@ -1,0 +1,38 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "lyricplay"
+version = "0.1.0"
+description = "Search YouTube and play music with synced lyrics in your browser."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+authors = [{ name = "lyricplay" }]
+keywords = ["music", "lyrics", "youtube", "web", "fastapi", "player"]
+dependencies = [
+    "fastapi>=0.115",
+    "pydantic-settings>=2.5",
+    "uvicorn>=0.30",
+    "yt-dlp>=2024.12.13",
+]
+
+[project.optional-dependencies]
+dev = ["httpx2>=2.0", "pytest>=8.0", "ruff>=0.8.0"]
+
+[project.scripts]
+lyricplay = "lyricplay.web.server:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/lyricplay"]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
